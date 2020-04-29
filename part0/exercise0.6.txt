@@ -1,0 +1,17 @@
+title Adding new note with SPA
+
+note over Browser:
+On pressing Submit, Browser adds the new
+note to its own list of notes, clears
+the input field and redraw all notes
+end note
+
+Browser->Server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+Server-->Browser: HTTP 201 Created
+
+note over Browser:
+No need for further requests,
+as everything is already loaded.
+We just update the database 
+with the POST.
+end note
