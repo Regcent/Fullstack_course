@@ -13,26 +13,31 @@ const App = () => {
       <Button handleClick={() => setGood(good + 1)} text='good'/>
       <Button handleClick={() => setNeutral(neutral + 1)} text='neutral'/>
       <Button handleClick={() => setBad(bad + 1)} text='bad'/>
-      <h2>Statistics</h2>
-      <Counter name="good" value={good}/>
-      <Counter name="neutral" value={neutral}/>
-      <Counter name="bad" value={bad}/>
-      <Counter name="all" value={good + neutral + bad}/>
-      <Counter name="average" value={(good - bad) / (good + neutral + bad)}/>
-      <div>Percentage {good * 100 / (good + neutral + bad)}%</div>
+      <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
 
 const Header = () => <h2>give feedback</h2>
 
-const Button = (props) => (
-  <button onClick={props.handleClick}>
-    {props.text}
-  </button>
-)
+const Button = (props) => <button onClick={props.handleClick}>{props.text}</button>
 
 const Counter = ({name, value}) => <div>{name} {value}</div>
+
+const Statistics = ({good, neutral, bad}) => {
+  const all = good + neutral + bad
+  return (
+    <>
+      <h2>Statistics</h2>
+      <Counter name="good" value={good}/>
+      <Counter name="neutral" value={neutral}/>
+      <Counter name="bad" value={bad}/>
+      <Counter name="all" value={all}/>
+      <Counter name="average" value={(good - bad) / all}/>
+      <div>Percentage {good * 100 / all}%</div>
+    </>
+  )
+}
 
 ReactDOM.render(<App />, 
   document.getElementById('root')
