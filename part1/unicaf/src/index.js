@@ -26,15 +26,23 @@ const Counter = ({name, value}) => <div>{name} {value}</div>
 
 const Statistics = ({good, neutral, bad}) => {
   const all = good + neutral + bad
-  return (
+  if (all > 0) {
+    return (
+      <>
+        <h2>Statistics</h2>
+        <Counter name="good" value={good}/>
+        <Counter name="neutral" value={neutral}/>
+        <Counter name="bad" value={bad}/>
+        <Counter name="all" value={all}/>
+        <Counter name="average" value={(good - bad) / all}/>
+        <div>Percentage {good * 100 / all}%</div>
+      </>
+    )
+  }
+  else return (
     <>
       <h2>Statistics</h2>
-      <Counter name="good" value={good}/>
-      <Counter name="neutral" value={neutral}/>
-      <Counter name="bad" value={bad}/>
-      <Counter name="all" value={all}/>
-      <Counter name="average" value={(good - bad) / all}/>
-      <div>Percentage {good * 100 / all}%</div>
+      <div>No feedback given</div>
     </>
   )
 }
