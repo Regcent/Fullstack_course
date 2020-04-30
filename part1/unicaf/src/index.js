@@ -22,7 +22,7 @@ const Header = () => <h2>give feedback</h2>
 
 const Button = (props) => <button onClick={props.handleClick}>{props.text}</button>
 
-const Counter = ({name, value}) => <div>{name} {value}</div>
+const Statistic = ({name, value}) => <div>{name} {value}</div>
 
 const Statistics = ({good, neutral, bad}) => {
   const all = good + neutral + bad
@@ -30,12 +30,12 @@ const Statistics = ({good, neutral, bad}) => {
     return (
       <>
         <h2>Statistics</h2>
-        <Counter name="good" value={good}/>
-        <Counter name="neutral" value={neutral}/>
-        <Counter name="bad" value={bad}/>
-        <Counter name="all" value={all}/>
-        <Counter name="average" value={(good - bad) / all}/>
-        <div>Percentage {good * 100 / all}%</div>
+        <Statistic name="good" value={good}/>
+        <Statistic name="neutral" value={neutral}/>
+        <Statistic name="bad" value={bad}/>
+        <Statistic name="all" value={all}/>
+        <Statistic name="average" value={(good - bad) / all}/>
+        <Statistic name="Percentage" value={(good * 100 / all) + "%"}/>
       </>
     )
   }
