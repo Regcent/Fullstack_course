@@ -17,15 +17,14 @@ const App = () => {
       <Counter name="good" value={good}/>
       <Counter name="neutral" value={neutral}/>
       <Counter name="bad" value={bad}/>
+      <Counter name="all" value={good + neutral + bad}/>
+      <Counter name="average" value={(good - bad) / (good + neutral + bad)}/>
+      <div>Percentage {good * 100 / (good + neutral + bad)}%</div>
     </div>
   )
 }
 
-const Header = () => (
-  <>
-    <h2>give feedback</h2>
-  </>
-)
+const Header = () => <h2>give feedback</h2>
 
 const Button = (props) => (
   <button onClick={props.handleClick}>
