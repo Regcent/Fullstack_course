@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Contact from './components/Contact'
 
 const App = () => {
     const [ persons, setPersons ] = useState([
@@ -32,7 +33,7 @@ const App = () => {
           </div>
         </form>
         <h2>Numbers</h2>
-        ...
+        {persons.map((person) => <Contact key={person.name} number='' name={person.name}/>)}
       </div>
     )
   }
