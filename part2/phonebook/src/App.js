@@ -18,7 +18,7 @@ const App = () => {
             alert("Can't add empty name to the phonebook")     
         }
         else if (persons.map((person) => person.name).includes(newName)) {
-            alert(newName + ' is already added to the phonebook')
+            alert(`${newName} is already added to the phonebook`)
         }
         else {
             setPersons(persons.concat({name: newName}))
