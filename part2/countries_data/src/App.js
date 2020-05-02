@@ -6,9 +6,9 @@ import axios from 'axios'
 const App = () => {
 
     const [countries, setCountries] = useState([])
-    const [newFilter, setNewFilter] = useState('')
-
-
+    const [filteredCountries, setFilteredCountries] = useState([])
+    //const [newFilter, setNewFilter] = useState('')
+   
     useEffect(() => {
         axios
           .get('https://restcountries.eu/rest/v2/all')
@@ -18,10 +18,12 @@ const App = () => {
           })
       }, [])
 
+    //const filteredCountries = countries.filter((country) => (country.name.toLowerCase().includes(newFilter.toLowerCase())))
+
     return (
         <div>
-            <Filter newFilter={newFilter} setNewFilter={setNewFilter} />
-            <Countries countries={countries} filterToUse={newFilter}/>
+            <Filter countries={countries} setFilteredCountries={setFilteredCountries}/>
+            <Countries countries={filteredCountries} setFilteredCountries={setFilteredCountries}/>
         </div>
     )
 }

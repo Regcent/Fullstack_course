@@ -1,12 +1,14 @@
 import React from 'react'
 
-const Filter = ({newFilter, setNewFilter}) => {
-    const handleFilterChange = (event) => setNewFilter(event.target.value)
+const Filter = (props) => {
+    const handleFilterChange = (event) => {
+        props.setFilteredCountries(props.countries.filter((country) =>
+            (country.name.toLowerCase().includes(event.target.value.toLowerCase()))))
+    }
 
     return(
         <div>
             find countries: <input
-                value={newFilter}
                 onChange={handleFilterChange}/>
         </div>
     )

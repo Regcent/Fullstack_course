@@ -8,9 +8,9 @@ const Country = ({country}) => {
         <div>Population: {country.population}</div> 
         <h3>Languages</h3>
         <ul>
-            {country.languages.map((language) => <li>{language.name}</li>)}
+            {country.languages.map((language) => <li key={language.name}>{language.name}</li>)}
         </ul>
-        <img width="300" src={country.flag}/>
+        <img width="250" src={country.flag} alt={`Flag of $(country.name)`}/>
     </div>
     )
 }
