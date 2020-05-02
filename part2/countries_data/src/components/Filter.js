@@ -5,7 +5,7 @@ const Filter = ({newFilter, setNewFilter}) => {
 
     return(
         <div>
-            filter shown with: <input
+            find countries: <input
                 value={newFilter}
                 onChange={handleFilterChange}/>
         </div>
