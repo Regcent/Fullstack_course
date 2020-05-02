@@ -1,9 +1,7 @@
 import React from 'react'
 import Country from './Country'
 
-const Countries = ({countries, setFilteredCountries}) => {
-
-    
+const Countries = ({countries, setFilteredCountries}) => {  
     if (countries.length > 10) {
         return <>Too many matches, specify another filter</>
     }
@@ -22,9 +20,6 @@ const CountryShort = ({country, setFilteredCountries}) => {
 
     const handleShowClick = (country) => {
         return (event) => {
-            console.log(event.target)
-            console.log("click")
-            console.log(country)
             setFilteredCountries([country])
         }
     }
