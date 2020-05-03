@@ -26,6 +26,13 @@ const App = () => {
             setNewNumber('')
         }
     }
+
+    const deletePersonWithId = (id) => {
+      return (event) => {
+        personsService.deleteContact(id)
+        setPersons(persons.filter(person => person.id !== id ? person : null))
+      }
+    }
     
     useEffect(() => {
       personsService
@@ -42,7 +49,7 @@ const App = () => {
         <h2>Add a new</h2>
         <PersonForm newName={newName} newNumber={newNumber} setNewName={setNewName} setNewNumber={setNewNumber} addContact={addContact}/>
         <h2>Numbers</h2>
-        <Persons persons={persons} filterToUse={newFilter}/>
+        <Persons persons={persons} filterToUse={newFilter} deletePersonWithId={deletePersonWithId}/>
       </div>
     )
   }

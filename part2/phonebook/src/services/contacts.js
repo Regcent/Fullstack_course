@@ -14,13 +14,13 @@ const create = (newContact) => {
         .then(response => response.data)
 }
 
-/*const delete = (contactId) => {
+const deleteContact = (contactId) => {
     return axios
         .delete(`${baseUrl}/${contactId}`)
         .then((response) => {
             console.log(response)
             return response.data
         })
-}*/
+}
 
-export default {getAll, create}
+export default {getAll, create, deleteContact}
