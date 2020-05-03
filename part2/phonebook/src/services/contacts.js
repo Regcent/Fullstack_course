@@ -17,10 +17,13 @@ const create = (newContact) => {
 const deleteContact = (contactId) => {
     return axios
         .delete(`${baseUrl}/${contactId}`)
-        .then((response) => {
-            console.log(response)
-            return response.data
-        })
+        .then(response => response.data)
 }
 
-export default {getAll, create, deleteContact}
+const update = (contactId, updatedContact) => {
+    return axios
+        .put(`${baseUrl}/${contactId}`, updatedContact)
+        .then(response => response.data)
+}
+
+export default {getAll, create, deleteContact, update}
