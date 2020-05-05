@@ -11,9 +11,10 @@ app.use(morgan((tokens, req, res) => {
         tokens.res(req, res, 'content-length'), '-',
         tokens['response-time'](req, res), 'ms'
       ]
+    morgan.token("body-json", (req, res) => JSON.stringify(req.body))
     console.log(req.method)
     if (req.method === "POST") {
-        tiny = tiny.concat(JSON.stringify(req.body))
+        tiny = tiny.concat(tokens["body-json"](req, res))
     }
     return tiny.join(' ')
   })
