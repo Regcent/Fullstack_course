@@ -5,6 +5,7 @@ const cors = require('cors')
 const app = express()
 
 app.use(express.json())
+app.use(express.static('build'))
 app.use(morgan((tokens, req, res) => {
     let tiny = [
         tokens.method(req, res),
