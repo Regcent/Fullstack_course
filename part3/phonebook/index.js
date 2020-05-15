@@ -1,5 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
+
 const app = express()
 
 app.use(express.json())
@@ -19,6 +21,8 @@ app.use(morgan((tokens, req, res) => {
     return tiny.join(' ')
   })
 )
+app.use(cors())
+
 let persons = [
     {
         "name": "Arto Hellas",
