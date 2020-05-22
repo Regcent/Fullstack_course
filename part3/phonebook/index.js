@@ -33,13 +33,16 @@ app.get('/', (req, res) => {
 
 app.get('/info', (req, res) => {
     console.log("Info")
-
-    res.send(`
-        <div>
-            <div>Phonebook has info for ${persons.length} people</div>
-            <div>${new Date()}}</div>
-        </div>`
+    Person.countDocuments({}, (err, count) => {
+        console.log(count)
+        res.send(`
+            <div>
+                <div>Phonebook has info for ${count} people</div>
+                <div>${new Date()}}</div>
+            </div>`
         )
+    })
+    
 })
 
 app.get('/api/persons', (req, res) => {
@@ -50,11 +53,12 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res, next) => {
+    const id = req.params.id
     console.log(`Get info for ${id}`)
-    Person.findById(request.params.id)
-        .then(note => {
-            if (note) {
-                res.json(note)
+    Person.findById(id)
+        .then(person => {
+            if (person) {
+                res.json(person)
             }
             else {
                 res.status(404).end()
