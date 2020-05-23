@@ -81,36 +81,14 @@ app.post('/api/persons', (req, res, next) => {
     const body = req.body
     const name = body.name
 
-    if (!body.number) {
-        next({
-            name: "MissingNumberError",
-            message: "number missing"
-        })
-        return
-    }
-
-    if (!name) {
-        next({
-            name: "MissingNameError",
-            message: "name missing"
-        })
-        return
-    }
-
-    /*if (persons.find(person => person.name === name)) {
-        return res.status(400).json({
-            error: 'name must be unique'
-        })
-    }*/
-
     const person = new Person({
         name: body.name,
         number: body.number
     })
 
-    person.save().then(savedNote => {
-        res.json(savedNote)
-    })
+    person.save()
+        .then(savedNote => res.json(savedNote))
+        .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
@@ -144,12 +122,8 @@ const errorHandler = (error, request, response, next) => {
       return response.status(400).send({ error: 'malformatted id' })
     }
 
-    else if (error.name === "MissingNameError") {
-        return response.status(400).send({ error: 'missing name' })
-    }
-
-    else if (error.name === "MissingNumberError") {
-        return response.status(400).send({ error: 'missing number' })
+    else if (error.name === 'ValidationError') {
+        return response.status(400).json({ error: error.message }) 
     }
   
     next(error)
