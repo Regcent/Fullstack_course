@@ -15,5 +15,10 @@ module.exports = {
     ecmaVersion: 11,
   },
   rules: {
+    'no-console': 0,
+    semi: [
+      'error',
+      'never',
+    ],
   },
-};
+}
