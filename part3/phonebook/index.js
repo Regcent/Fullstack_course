@@ -15,25 +15,25 @@ app.use(morgan((tokens, req, res) => {
         tokens.status(req, res),
         tokens.res(req, res, 'content-length'), '-',
         tokens['response-time'](req, res), 'ms'
-      ]
-    morgan.token("body-json", (req, res) => JSON.stringify(req.body))
+    ]
+    morgan.token('body-json', (req) => JSON.stringify(req.body))
     console.log(req.method)
-    if (req.method === "POST") {
-        tiny = tiny.concat(tokens["body-json"](req, res))
+    if (req.method === 'POST') {
+        tiny = tiny.concat(tokens['body-json'](req, res))
     }
     return tiny.join(' ')
-  })
-)
+}))
+
 app.use(cors())
 
-app.get('/', (req, res) => {
-    console.log("Coucou")
+app.get('/', (_req, res) => {
+    console.log('Coucou')
     res.send('<h1>Hello World!</h1>')
 })
 
-app.get('/info', (req, res) => {
-    console.log("Info")
-    Person.countDocuments({}, (err, count) => {
+app.get('/info', (_req, res) => {
+    console.log('Info')
+    Person.countDocuments({}, (_err, count) => {
         console.log(count)
         res.send(`
             <div>
@@ -42,11 +42,10 @@ app.get('/info', (req, res) => {
             </div>`
         )
     })
-    
 })
 
-app.get('/api/persons', (req, res) => {
-    console.log("Coucou persons")
+app.get('/api/persons', (_req, res) => {
+    console.log('Coucou persons')
     Person.find({}).then(notes => {
         res.json(notes)
     })
@@ -69,16 +68,15 @@ app.get('/api/persons/:id', (req, res, next) => {
 
 app.delete('/api/persons/:id', (req, res, next) => {
     Person.findByIdAndRemove(req.params.id)
-        .then(result => {
+        .then(() => {
             res.status(204).end()
         })
         .catch(error => next(error))
 })
 
 app.post('/api/persons', (req, res, next) => {
-    console.log("Adding new person")
+    console.log('Adding new person')
     const body = req.body
-    const name = body.name
 
     const person = new Person({
         name: body.name,
@@ -91,7 +89,7 @@ app.post('/api/persons', (req, res, next) => {
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
-    console.log("Updating person number")
+    console.log('Updating person number')
     const body = req.body
 
     const person = {
@@ -99,7 +97,7 @@ app.put('/api/persons/:id', (req, res, next) => {
         number: body.number
     }
 
-    Person.findByIdAndUpdate(req.params.id, person, { runValidators: true, context: 'query', new: true})
+    Person.findByIdAndUpdate(req.params.id, person, { runValidators: true, context: 'query', new: true })
         .then(updatedPerson => {
             if (updatedPerson) {
                 res.json(updatedPerson)
@@ -112,30 +110,30 @@ app.put('/api/persons/:id', (req, res, next) => {
 })
 
 
-const unknownEndpoint = (request, response) => {
+const unknownEndpoint = (_request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
-  }
-  
+}
+
 app.use(unknownEndpoint)
 
-const errorHandler = (error, request, response, next) => {
+const errorHandler = (error, _request, response, next) => {
     console.log(error)
     console.error(error.message)
-  
+
     if (error.name === 'CastError') {
-      return response.status(400).send({ error: 'malformatted id' })
+        return response.status(400).send({ error: 'malformatted id' })
     }
 
     else if (error.name === 'ValidationError') {
-        return response.status(400).json({ error: error.message }) 
+        return response.status(400).json({ error: error.message })
     }
-  
+
     next(error)
 }
-  
+
 app.use(errorHandler)
 
-const PORT = process.env.PORT || 3001 
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
