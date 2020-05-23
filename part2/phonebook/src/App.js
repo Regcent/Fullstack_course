@@ -35,19 +35,25 @@ const App = () => {
               personsService
                 .update(id, {name: newName, number: newNumber})
                 .then(updatedPerson => {
-                  setPersons(persons.map((person) => person.id !== id ? person : updatedPerson))
+                  setPersons(persons.map(person => person.id !== id ? person : updatedPerson))
                   setNotification(`${newName} was updated`)
                   setTimeout(() => {
                     setNotification(null)
                   }, 3000)
                 })
                 .catch(error => {
-                  setErrorMessage(`${newName}'s information has already been deleted from server.`)
-                  setPersons(persons.filter(person => person.id !== id ? person : null))
+                  console.log(error.response)
+                  if (error.response.status === 404) { 
+                    setErrorMessage(`${newName}'s information has already been deleted from server.`)
+                    setPersons(persons.filter(person => person.id !== id ? person : null))
+                  }
+                  else if (error.response.status === 400) {
+                    setErrorMessage(error.response.data.error)
+                  }
                   setTimeout(() => {
                     setErrorMessage(null)
                   }, 3000)
-            })
+                })
           }
         }
         else {
@@ -58,6 +64,13 @@ const App = () => {
                 setNotification(`${newName} was added`)
                 setTimeout(() => {
                   setNotification(null)
+                }, 3000)
+              })
+              .catch(error => {
+                console.log(error.response.data)
+                setErrorMessage(error.response.data.error)
+                setTimeout(() => {
+                  setErrorMessage(null)
                 }, 3000)
               })
             setNewName('')

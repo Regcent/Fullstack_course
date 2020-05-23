@@ -63,7 +63,6 @@ app.get('/api/persons/:id', (req, res, next) => {
             else {
                 res.status(404).end()
             }
-        
         })
         .catch(error => next(error))
 })
@@ -100,9 +99,14 @@ app.put('/api/persons/:id', (req, res, next) => {
         number: body.number
     }
 
-    Person.findByIdAndUpdate(req.params.id, person, {new: true})
+    Person.findByIdAndUpdate(req.params.id, person, { runValidators: true, context: 'query', new: true})
         .then(updatedPerson => {
-            res.json(updatedPerson)
+            if (updatedPerson) {
+                res.json(updatedPerson)
+            }
+            else {
+                res.status(404).end()
+            }
         })
         .catch(error => next(error))
 })
