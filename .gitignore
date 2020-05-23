@@ -7,3 +7,5 @@ part2/test/src/components/Note.js
 part2/test/src/index.css
 part2/test/src/index.js
 *.env
+node_modules
+part3/part3-notes-backend
